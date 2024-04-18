@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Anime List</title>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
+</head>
+<body>
+    <table id="anime-table" class="display" style="width:100%">
+        <thead>
+            <tr>
+                <th>Rank</th>
+                <th>Image</th>
+                <th>Title</th>
+                <th>Rating</th>
+                <th>Genres</th>
+                <th>Chars in Anime</th>
+                <th>Release Date</th>
+                <th>Available At</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <script>
+        $(document).ready(function() {
+            $.getJSON('data/hasil.json', function(data) {
+                var table = $('#anime-table').DataTable({
+                    data: data,
+                    columns: [
+                        { data: 'rank' },
+                        {
+                            data: 'image_url',
+                            render: function(data, type, row) {
+                                return '<a href="' + data + '" target="_blank"><img src="' + data + '" height="100"></a>';
+                            }
+                        },
+                        { data: 'title' },
+                        { data: 'rating' },
+                        {
+                            data: 'genre',
+                            render: function(data) {
+                                return data.join(', ');
+                            }
+                        },
+                        {
+                            data: 'character',
+                            render: function(data) {
+                                return data.join(', ');
+                            }
+                        },
+                        { data: 'rilis' },
+                        { 
+                            data: 'available',
+                            render: function(data) {
+                                return data.join(', ');
+                            }
+                        }
+                    ]
+                }); 
+
+            });
+
+        });
+    </script>
+</body>
+</html>
